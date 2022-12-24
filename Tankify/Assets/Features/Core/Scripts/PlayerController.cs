@@ -10,8 +10,6 @@ namespace Features.Core.Scripts
         
         [SerializeField] private GameManager _gameManager;
 
-        private Rigidbody2D _rb;
-
         private Camera _mainCamera;
 
         private Vector2 _mousePositon;
@@ -21,21 +19,28 @@ namespace Features.Core.Scripts
         [SerializeField] private GameObject _bulletSpawn;
 
         private bool _isShooting;
+
+        private bool _isClicked;
+        
         private float _bulletSpeed = 15f;
+
+        private float _playerHealth = 100f;
         
         // Start is called before the first frame update
         void Start()
         {
-            _rb = gameObject.GetComponent<Rigidbody2D>();
             _mainCamera = Camera.main;
+            _isClicked = false;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !_isClicked)
             {
                 _isShooting = true;
+                _isClicked = true;
+                StartCoroutine(IsClickedDisabler());
             }
             
             RotatePlayer();
@@ -44,8 +49,7 @@ namespace Features.Core.Scripts
             {
                 StartCoroutine(Fire());
             }
-            
-            
+
         }
         
         void RotatePlayer()
@@ -59,6 +63,12 @@ namespace Features.Core.Scripts
 
         }
         
+        IEnumerator IsClickedDisabler()
+        {
+            yield return new WaitForSeconds(0.5f);
+            _isClicked = false;
+        }
+        
         IEnumerator Fire()
         {
             _isShooting = false;
@@ -67,6 +77,16 @@ namespace Features.Core.Scripts
 
             yield return new WaitForSeconds(3);
             Destroy(bullet);
+        }
+
+        public void TakeDamage(float damage)
+        {
+            _playerHealth -= damage;
+        }
+
+        public float GetPlayerHealth()
+        {
+            return _playerHealth;
         }
     }
 }

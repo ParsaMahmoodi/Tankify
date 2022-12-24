@@ -8,12 +8,16 @@ namespace Features.Core.Scripts
 {
     public class EnemyController : MonoBehaviour
     {
+        [SerializeField]
+        private GameManager _gameManager;
         
         private GameObject _player;
         
         private NavMeshAgent _agent;
-        
+
         private float _enemyHealth = 100f;
+
+        private float _enemyDamage = 20f;
 
         private float _enemyMoveSpeed = 2f;
 
@@ -77,8 +81,13 @@ namespace Features.Core.Scripts
             }
             else if (collision.gameObject.CompareTag("Player"))
             {
-                // _gameManager._gameOver = true;
-                // collision.gameObject.SetActive(false);
+                // PlayerController.TakeDamage(_enemyDamage);
+                //
+                // if (PlayerController.GetPlayerHealth() < 0)
+                // {
+                //     _gameManager._gameOver = true;
+                //     collision.gameObject.SetActive(false);
+                // }
             }
         }
         

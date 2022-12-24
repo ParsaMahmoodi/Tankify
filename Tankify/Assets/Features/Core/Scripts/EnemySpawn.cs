@@ -12,7 +12,7 @@ namespace Features.Core.Scripts
         [SerializeField] private GameObject _enemy;
 
         private float _spawnTimer = 2f;
-        private float _spawnRateIncrease = 5f;
+        private float _spawnRateIncrease = 10f;
     
         // Start is called before the first frame update
         void Start()
@@ -39,7 +39,7 @@ namespace Features.Core.Scripts
             yield return new WaitForSeconds(_spawnRateIncrease);
             if (_spawnTimer >= 0.5f)
             {
-                _spawnTimer -= 0.2f;
+                _spawnTimer -= 0.15f;
             }
             StartCoroutine(SpawnRateIncrease());
         }
