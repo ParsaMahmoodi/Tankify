@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Mathematics;
 using System.Collections;
+using UnityEngine.UI;
 
 
 namespace Features.Core.Scripts
@@ -8,7 +9,14 @@ namespace Features.Core.Scripts
     public class PlayerController : MonoBehaviour
     {
         
-        [SerializeField] private GameManager _gameManager;
+        [SerializeField]
+        private GameManager _gameManager;
+
+        [SerializeField]
+        private Text _currentScoreText;
+        
+        [SerializeField]
+        private PlayerHealthBarController _healthBar;
 
         private Camera _mainCamera;
 
@@ -25,10 +33,14 @@ namespace Features.Core.Scripts
         private float _bulletSpeed = 15f;
 
         private float _playerHealth = 100f;
+
+        private int _playerScore = 0;
         
         // Start is called before the first frame update
         void Start()
         {
+            _gameManager = FindObjectOfType<GameManager>();
+            
             _mainCamera = Camera.main;
             _isClicked = false;
         }
@@ -65,7 +77,7 @@ namespace Features.Core.Scripts
         
         IEnumerator IsClickedDisabler()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
             _isClicked = false;
         }
         
@@ -79,14 +91,34 @@ namespace Features.Core.Scripts
             Destroy(bullet);
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage = 25)
         {
             _playerHealth -= damage;
+            
+            _healthBar.SetHealth(_playerHealth);
+            
+            if (_playerHealth <= 0)
+            {
+                SaveScore(_playerScore);
+                _gameManager._gameOver = true;
+                _gameManager.GameOver(_playerScore);
+            }
         }
 
-        public float GetPlayerHealth()
+        public void AddPlayerScore()
         {
-            return _playerHealth;
+            _playerScore += 1;
+            _currentScoreText.text = _playerScore.ToString();
+        }
+        
+        private void SaveScore(int score)
+        {
+            int previousHighScore = PlayerPrefs.GetInt("HighScore", 0);
+            
+            if(score > previousHighScore)
+            {
+                PlayerPrefs.SetInt("HighScore", score);
+            }
         }
     }
 }

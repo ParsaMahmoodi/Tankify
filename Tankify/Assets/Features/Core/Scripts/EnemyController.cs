@@ -1,3 +1,4 @@
+using System;
 using NavMeshComponents.Extensions;
 using UnityEditor;
 using UnityEngine;
@@ -9,13 +10,19 @@ namespace Features.Core.Scripts
     public class EnemyController : MonoBehaviour
     {
         [SerializeField]
+        private EnemyHealthBarController _healthBar; 
+
         private GameManager _gameManager;
         
         private GameObject _player;
+
+        private PlayerController _playerController;
         
         private NavMeshAgent _agent;
 
-        private float _enemyHealth = 100f;
+        private float _enemyMaxHealth = 100f;
+
+        private float _enemyCurrentHealth;
 
         private float _enemyDamage = 20f;
 
@@ -32,10 +39,16 @@ namespace Features.Core.Scripts
         void Start()
         {
             _player = GameObject.FindGameObjectWithTag("Player");
+
+            _playerController = _player.GetComponent<PlayerController>();
+
+            _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
             
             _agent = GetComponent<NavMeshAgent>();
             _agent.updateUpAxis = false;
             // _agent.updateRotation = false;
+
+            _enemyCurrentHealth = _enemyMaxHealth;
         }
 
         // Update is called once per frame
@@ -69,34 +82,34 @@ namespace Features.Core.Scripts
             if (collision.gameObject.CompareTag("Bullet"))
             {
                 StartCoroutine(Damaged());
-
-                _enemyHealth -= 25f;
-
-                if (_enemyHealth <= 0f)
-                {
-                    Destroy(gameObject);
-                }
-
+                
+                TakeDamage();
+                
                 Destroy(collision.gameObject);
             }
             else if (collision.gameObject.CompareTag("Player"))
             {
-                // PlayerController.TakeDamage(_enemyDamage);
-                //
-                // if (PlayerController.GetPlayerHealth() < 0)
-                // {
-                //     _gameManager._gameOver = true;
-                //     collision.gameObject.SetActive(false);
-                // }
+                _playerController.TakeDamage(_enemyDamage);
             }
         }
-        
         
         IEnumerator Damaged()
         {
             _disableEnemy = true;
             yield return new WaitForSeconds(0.5f);
             _disableEnemy = false;
+        }
+
+        private void TakeDamage(int dmg = 25)
+        {
+            _enemyCurrentHealth -= dmg;
+            _healthBar.SetHealth(_enemyCurrentHealth);
+            
+            if (_enemyCurrentHealth <= 0f)
+            {
+                Destroy(gameObject);
+                _playerController.AddPlayerScore();
+            }
         }
     }
 }
