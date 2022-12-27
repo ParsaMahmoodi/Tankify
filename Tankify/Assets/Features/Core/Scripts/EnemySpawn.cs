@@ -9,6 +9,7 @@ namespace Features.Core.Scripts
         [SerializeField] private GameManager _gameManager;
 
         [SerializeField] private GameObject[] _spawnPonints;
+        
         [SerializeField] private GameObject _enemy;
 
         private float _spawnTimer = 2f;
@@ -21,14 +22,13 @@ namespace Features.Core.Scripts
             StartCoroutine(SpawnRateIncrease());
         }
 
-        // Update is called once per frame
         IEnumerator SpawnNextEnemy()
         {
             int nextSpawnLocation = Random.Range(0, _spawnPonints.Length);
             Instantiate(_enemy, _spawnPonints[nextSpawnLocation].transform.position, Quaternion.identity);
             yield return new WaitForSeconds(_spawnTimer);
 
-            if (!_gameManager._gameOver)
+            if (!_gameManager._gameOver && !_gameManager._gameIsPaused)
             {
                 StartCoroutine(SpawnNextEnemy());
             }
@@ -41,6 +41,12 @@ namespace Features.Core.Scripts
             {
                 _spawnTimer -= 0.15f;
             }
+            StartCoroutine(SpawnRateIncrease());
+        }
+
+        public void ResumeSpawn()
+        {
+            StartCoroutine(SpawnNextEnemy());
             StartCoroutine(SpawnRateIncrease());
         }
     }

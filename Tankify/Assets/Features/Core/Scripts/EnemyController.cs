@@ -7,11 +7,15 @@ using System.Collections;
 
 namespace Features.Core.Scripts
 {
+    [SelectionBase]
     public class EnemyController : MonoBehaviour
     {
         [SerializeField]
         private EnemyHealthBarController _healthBar; 
-
+        
+        [SerializeField]
+        private ParticleSystem _particleSystem;
+        
         private GameManager _gameManager;
         
         private GameObject _player;
@@ -60,7 +64,17 @@ namespace Features.Core.Scripts
         
         private void MoveEnemy()
         {
-            _agent.SetDestination(_player.transform.position);
+            if (_gameManager._gameIsPaused || _gameManager._gameOver)
+            {
+                _agent.isStopped = true;
+            }
+
+            else
+            {
+                _agent.isStopped = false;
+                _agent.SetDestination(_player.transform.position);
+            }
+            
         }
         
         void RotateEnemy()
@@ -90,6 +104,8 @@ namespace Features.Core.Scripts
             else if (collision.gameObject.CompareTag("Player"))
             {
                 _playerController.TakeDamage(_enemyDamage);
+                _particleSystem.Play();
+                StartCoroutine(DestroyEnemy());
             }
         }
         
@@ -107,9 +123,17 @@ namespace Features.Core.Scripts
             
             if (_enemyCurrentHealth <= 0f)
             {
-                Destroy(gameObject);
+                _particleSystem.Play();
+                StartCoroutine(DestroyEnemy());
                 _playerController.AddPlayerScore();
             }
+        }
+
+        IEnumerator DestroyEnemy()
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            yield return new WaitForSeconds(0.5f);
+            Destroy(gameObject);
         }
     }
 }

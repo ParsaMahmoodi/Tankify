@@ -48,7 +48,7 @@ namespace Features.Core.Scripts
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetMouseButtonDown(0) && !_isClicked)
+            if (Input.GetMouseButtonDown(0) && !_isClicked && !_gameManager._gameIsPaused && !_gameManager._gameOver)
             {
                 _isShooting = true;
                 _isClicked = true;
@@ -56,7 +56,7 @@ namespace Features.Core.Scripts
             }
             
             RotatePlayer();
-            
+
             if (_isShooting)
             {
                 StartCoroutine(Fire());
@@ -66,13 +66,15 @@ namespace Features.Core.Scripts
         
         void RotatePlayer()
         {
-            _mousePositon = Input.mousePosition;
-            Vector3 screePoint = _mainCamera.WorldToScreenPoint(transform.localPosition);
-            _offset = new Vector2(_mousePositon.x - screePoint.x, _mousePositon.y - screePoint.y).normalized;
+            if (!_gameManager._gameIsPaused && !_gameManager._gameOver)
+            {
+                _mousePositon = Input.mousePosition;
+                Vector3 screePoint = _mainCamera.WorldToScreenPoint(transform.localPosition);
+                _offset = new Vector2(_mousePositon.x - screePoint.x, _mousePositon.y - screePoint.y).normalized;
 
-            float angle = Mathf.Atan2(_offset.y, _offset.x)*Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
-
+                float angle = Mathf.Atan2(_offset.y, _offset.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
+            }
         }
         
         IEnumerator IsClickedDisabler()
@@ -108,7 +110,7 @@ namespace Features.Core.Scripts
         public void AddPlayerScore()
         {
             _playerScore += 1;
-            _currentScoreText.text = _playerScore.ToString();
+            _currentScoreText.text = "Score: " + _playerScore.ToString();
         }
         
         private void SaveScore(int score)
