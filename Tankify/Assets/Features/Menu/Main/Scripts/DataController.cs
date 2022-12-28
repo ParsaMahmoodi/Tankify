@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Features.Core.Scripts
+namespace Features.Menu.Main.Scripts
 {
     public class DataController
     {
