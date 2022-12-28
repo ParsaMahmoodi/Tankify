@@ -30,12 +30,12 @@ namespace Features.Core.Scripts
 
         private float _enemyDamage = 20f;
 
-        private float _enemyMoveSpeed = 2f;
+        // private float _enemyMoveSpeed = 2f;
 
         private Quaternion _targetRotation;
 
-        private bool _disableEnemy = false;
-        
+        // private bool _disableEnemy;
+
         private Vector2 _moveDirection;
 
     
@@ -95,7 +95,7 @@ namespace Features.Core.Scripts
         {
             if (collision.gameObject.CompareTag("Bullet"))
             {
-                StartCoroutine(Damaged());
+                // StartCoroutine(Damaged());
                 
                 TakeDamage();
                 
@@ -109,12 +109,12 @@ namespace Features.Core.Scripts
             }
         }
         
-        IEnumerator Damaged()
-        {
-            _disableEnemy = true;
-            yield return new WaitForSeconds(0.5f);
-            _disableEnemy = false;
-        }
+        // IEnumerator Damaged()
+        // {
+        //     _disableEnemy = true;
+        //     yield return new WaitForSeconds(0.5f);
+        //     _disableEnemy = false;
+        // }
 
         private void TakeDamage(int dmg = 25)
         {
