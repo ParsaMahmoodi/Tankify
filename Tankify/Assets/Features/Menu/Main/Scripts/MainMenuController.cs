@@ -1,35 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using Features.Core.Scripts;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class MainMenuController : MonoBehaviour
+namespace Features.Menu.Main.Scripts
 {
-    
-    [SerializeField]
-    private DataController _data;
-    
-    public void StartGame()
+    public class MainMenuController : MonoBehaviour
     {
-        Debug.Log(PlayerPrefs.GetInt("HeartCount"));
-
-
-        // if (heartCount <= 0)
-        // {
-        //     ShowError();
-        // }
-        // else
-        // {
-        //     SceneManager.LoadScene("GameScene");
-        // }
-
-    }
     
-    void ShowError()
-    {
+        [SerializeField]
+        private DataController _data;
+    
+        [SerializeField]
+        private Text _highScoreText;
+
+        private void Start()
+        {
+            _highScoreText.text = "Best Score: " + PlayerPrefs.GetInt("HighScore", 0);
+        }
+
+        public void StartGame()
+        {
+            Debug.Log(PlayerPrefs.GetInt("HeartCount"));
+
+            // if (heartCount <= 0)
+            // {
+            //     ShowError();
+            // }
+            // else
+            // {
+            //     SceneManager.LoadScene("GameScene");
+            // }
+
+        }
+    
+        void ShowError()
+        {
         
-    }
+        }
 
-    
+    }
 }
