@@ -32,14 +32,14 @@ namespace Features.Core.Scripts
             }
         }
 
-        public void Pause()
+        private void Pause()
         {
             _pauseMenuUI.SetActive(true);
             _gameManager._gameIsPaused = true;
             _previousHighScoreText.text = "Previous High Score: " + PlayerPrefs.GetInt("HighScore", 0);
         }
         
-        public void Resume()
+        private void Resume()
         {
             _pauseMenuUI.SetActive(false);
             _gameManager._gameIsPaused = false;
