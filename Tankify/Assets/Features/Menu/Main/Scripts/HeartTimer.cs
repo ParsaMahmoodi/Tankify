@@ -7,19 +7,23 @@ namespace Features.Menu.Main.Scripts
 {
     public class HeartTimer : MonoBehaviour
     {
-        [SerializeField]
-        private DataController _data;
+        private DataController _dataController = DataController.GetInstance();
 
         [SerializeField]
         private float _timeLimit = 1f * 60f;
 
         private float _timer;
 
-        [SerializeField] private Text _timeForNextHeart;
+        [SerializeField]
+        private Text _timeForNextHeart;
+
+        [SerializeField]
+        private Text _heartCounterText;
     
         void Start()
-        {
-            ResetTimer();
+        { 
+            UpdateHeartCounterText();
+            LoadHeartState();
         }
 
         void Update()
@@ -49,10 +53,77 @@ namespace Features.Menu.Main.Scripts
             _timeForNextHeart.text = currentTime;
         }
 
+        private void UpdateHeartCounterText()
+        {
+            _heartCounterText.text = _dataController.HeartCount.ToString() + "/10";
+        }
+
         private void AddHeart()
         {
             ResetTimer();
+            if (_dataController.HeartCount < 10)
+            {
+                _dataController.HeartCount += 1;
+                UpdateHeartCounterText();
+            }
         }
-        
+
+        private void Awake()
+        {
+            LoadHeartState();
+        }
+
+        private void OnEnable()
+        {
+            LoadHeartState();
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            SaveHeartState();
+        }
+
+        private void OnApplicationQuit()
+        {
+            SaveHeartState();
+        }
+
+        private void OnDestroy()
+        {
+            SaveHeartState();
+        }
+
+        private void SaveHeartState()
+        {
+            string remainingTime = _timer.ToString();
+            DateTime currentTime = DateTime.Now;
+            _dataController.SaveHeartCounterState(remainingTime, currentTime.ToString());
+        }
+
+        private void LoadHeartState()
+        {
+            _dataController.LoadHeartCounterState();
+            float timeDiff = Convert.ToSingle((DateTime.Now - DateTime.Parse(_dataController.LastSystemTime)).TotalSeconds);
+            CalculateHearts(timeDiff);
+        }
+
+        private void CalculateHearts(float timeDifference)
+        {
+            float timeElapsed = float.Parse(_dataController.LastRemainingTimeForNextHeart) - timeDifference;
+
+            if (timeElapsed > 0)
+            {
+                _timer = timeElapsed;
+            }
+
+            else
+            {
+                AddHeart();
+                _dataController.LastRemainingTimeForNextHeart = _timeLimit.ToString();
+                CalculateHearts(-1 * (timeElapsed));
+            }
+            
+
+        }
     }
 }
