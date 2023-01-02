@@ -16,7 +16,7 @@ namespace Features.Core.Scripts
         [SerializeField]
         private ParticleSystem _particleSystem;
         
-        private GameManager _gameManager;
+        private GameManager _gameManager = GameManager.Instance;
         
         private GameObject _player;
 
@@ -42,11 +42,10 @@ namespace Features.Core.Scripts
         // Start is called before the first frame update
         void Start()
         {
+            _player = _gameManager.Player;
             _player = GameObject.FindGameObjectWithTag("Player");
 
             _playerController = _player.GetComponent<PlayerController>();
-
-            _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
             
             _agent = GetComponent<NavMeshAgent>();
             _agent.updateUpAxis = false;
@@ -64,7 +63,7 @@ namespace Features.Core.Scripts
         
         private void MoveEnemy()
         {
-            if (_gameManager._gameIsPaused || _gameManager._gameOver)
+            if (_gameManager.gameIsPaused || _gameManager.gameOverState)
             {
                 _agent.isStopped = true;
             }

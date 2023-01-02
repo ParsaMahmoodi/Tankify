@@ -351,12 +351,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 080d7df2144ba7c41b67d32d6156550b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 316029698}
+  _gameManager: {fileID: 0}
   _spawnPonints:
   - {fileID: 1416456438}
   - {fileID: 196855550}
   - {fileID: 1879577757}
-  _enemy: {fileID: 7316209437831215423, guid: 5e5257513e95cdc41b3d208254932a77, type: 3}
+  _enemy:
+  - {fileID: 7316209437831215423, guid: 5e5257513e95cdc41b3d208254932a77, type: 3}
+  - {fileID: 7316209437831215423, guid: 63b61810875f4434fb7bbebdb9d8436f, type: 3}
+  - {fileID: 7316209437831215423, guid: c17cc7cd3fb609d419a25aafee366734, type: 3}
+  - {fileID: 7316209437831215423, guid: a2deffb85a77d834085b234d02546a73, type: 3}
 --- !u!4 &153480178
 Transform:
   m_ObjectHideFlags: 0
@@ -374,6 +378,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &168537377 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1645903750527031441, guid: e9951347b466d3d4fbf2e4b1252df5c0, type: 3}
+  m_PrefabInstance: {fileID: 850769090}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &196855550
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,7 +422,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 316029699}
-  - component: {fileID: 316029698}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -421,21 +429,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &316029698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 316029697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81d35211f273b574192a7205045add42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameOver: 0
-  _gameIsPaused: 0
-  _gameOverScreen: {fileID: 475877263}
 --- !u!4 &316029699
 Transform:
   m_ObjectHideFlags: 0
@@ -2564,7 +2557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ea2d66596017a48a06507acb97e33f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 316029698}
+  _gameManager: {fileID: 0}
   _pauseMenuUI: {fileID: 1669035946}
   _previousHighScoreText: {fileID: 1630931893}
   _enemySpawn: {fileID: 153480176}
@@ -2773,11 +2766,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d32a6ca4ed1878418b5e24571ad18d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 316029698}
   _currentScoreText: {fileID: 1145278300}
   _healthBar: {fileID: 592390192}
   _bullet: {fileID: 8643516512072269177, guid: 1ad7310f4f740e44e88cbed7eacccd91, type: 3}
-  _bulletSpawn: {fileID: 578910281}
+  _bulletSpawnLeft: {fileID: 168537377}
+  _bulletSpawnRight: {fileID: 578910281}
 --- !u!1 &1944218139
 GameObject:
   m_ObjectHideFlags: 0

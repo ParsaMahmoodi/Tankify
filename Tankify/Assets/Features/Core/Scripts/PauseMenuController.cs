@@ -22,7 +22,7 @@ namespace Features.Core.Scripts
         
         public void PauseButton()
         {
-            if (_gameManager._gameIsPaused)
+            if (_gameManager.gameIsPaused)
             {
                 Resume();
             }
@@ -35,14 +35,14 @@ namespace Features.Core.Scripts
         private void Pause()
         {
             _pauseMenuUI.SetActive(true);
-            _gameManager._gameIsPaused = true;
+            _gameManager.gameIsPaused = true;
             _previousHighScoreText.text = "Previous High Score: " + PlayerPrefs.GetInt("HighScore", 0);
         }
         
         private void Resume()
         {
             _pauseMenuUI.SetActive(false);
-            _gameManager._gameIsPaused = false;
+            _gameManager.gameIsPaused = false;
             _enemySpawn.GetComponent<EnemySpawn>().ResumeSpawn();
         }
         

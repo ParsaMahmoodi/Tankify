@@ -4,15 +4,35 @@ namespace Features.Core.Scripts
 {
     public class GameManager : MonoBehaviour
     {
-        public bool _gameOver = false;
-        public bool _gameIsPaused = false;
+        public bool gameOverState = false;
+        public bool gameIsPaused = false;
 
         [SerializeField]
-        private GameOverScreen _gameOverScreen;
+        private GameOverScreen gameOverScreen;
+
+        [SerializeField]
+        private GameObject _player;
+        
+        
+        public static GameManager Instance { get; private set; }
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
+        public GameObject Player
+        {
+            get
+            {
+                return _player;
+            }
+        }
+
 
         public void GameOver(int score)
         {
-            _gameOverScreen.Setup(score);
+            gameOverScreen.Setup(score);
         }
 
     }

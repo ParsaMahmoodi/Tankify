@@ -1,10 +1,10 @@
 using UnityEngine;
 
-namespace Features.Core.ScriptableObjects
+namespace Features.Core.Scripts
 {
     [CreateAssetMenu(fileName = "Player Data", menuName = "PlayerData")]
     public class PlayerData : ScriptableObject
     {
-        public new string health;
+        public float health;
     }
 }

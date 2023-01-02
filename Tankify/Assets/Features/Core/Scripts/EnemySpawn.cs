@@ -10,7 +10,7 @@ namespace Features.Core.Scripts
 
         [SerializeField] private GameObject[] _spawnPonints;
         
-        [SerializeField] private GameObject _enemy;
+        [SerializeField] private GameObject[] _enemy;
 
         private float _spawnTimer = 2f;
         private float _spawnRateIncrease = 10f;
@@ -18,6 +18,8 @@ namespace Features.Core.Scripts
         // Start is called before the first frame update
         void Start()
         {
+            _gameManager = GameManager.Instance;
+            
             StartCoroutine(SpawnNextEnemy());
             StartCoroutine(SpawnRateIncrease());
         }
@@ -25,10 +27,11 @@ namespace Features.Core.Scripts
         IEnumerator SpawnNextEnemy()
         {
             int nextSpawnLocation = Random.Range(0, _spawnPonints.Length);
-            Instantiate(_enemy, _spawnPonints[nextSpawnLocation].transform.position, Quaternion.identity);
+            int nextEnemyType = Random.Range(0, _enemy.Length);
+            Instantiate(_enemy[nextEnemyType], _spawnPonints[nextSpawnLocation].transform.position, Quaternion.identity);
             yield return new WaitForSeconds(_spawnTimer);
 
-            if (!_gameManager._gameOver && !_gameManager._gameIsPaused)
+            if (!_gameManager.gameOverState && !_gameManager.gameIsPaused)
             {
                 StartCoroutine(SpawnNextEnemy());
             }
