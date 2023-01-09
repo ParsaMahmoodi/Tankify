@@ -461,6 +461,7 @@ GameObject:
   - component: {fileID: 8338518914396107448}
   - component: {fileID: 2086147244}
   - component: {fileID: 1550726865781630728}
+  - component: {fileID: 1771220473924458896}
   m_Layer: 0
   m_Name: EnemyNo2
   m_TagString: Untagged
@@ -620,6 +621,18 @@ MonoBehaviour:
   healthBar: {fileID: 3867577726030794947}
   agent: {fileID: 2086147244}
   enemyData: {fileID: 11400000, guid: 7131d432b7a3cee47abe2378797a5198, type: 2}
+--- !u!114 &1771220473924458896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7316209437831215423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb684e500e960a440bf4bbe28fc7138e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9142377994907600594
 GameObject:
   m_ObjectHideFlags: 0

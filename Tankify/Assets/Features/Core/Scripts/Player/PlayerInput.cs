@@ -1,8 +1,8 @@
-using UnityEngine;
+using System;
 using System.Collections;
+using UnityEngine;
 
-
-namespace Features.Core.Scripts
+namespace Features.Core.Scripts.Player
 {
     public class PlayerInput : MonoBehaviour
     {
@@ -12,11 +12,14 @@ namespace Features.Core.Scripts
         private PlayerController _playerController;
 
         private Vector2 _mousePosition;
-        private Vector2 _offset;
+        private Vector2 _targetPosition;
 
         public float angle;
-        
 
+
+        public event EventHandler<Vector2> OnClicked;
+        
+        
         void Start()
         {
             _mainCamera = Camera.main;
@@ -29,17 +32,18 @@ namespace Features.Core.Scripts
 
         void Update()
         {
-            
             _mousePosition = Input.mousePosition;
             Vector3 screenPoint = _mainCamera.WorldToScreenPoint(transform.localPosition);
-            _offset = new Vector2(_mousePosition.x - screenPoint.x, _mousePosition.y - screenPoint.y).normalized;
-            angle = Mathf.Atan2(_offset.y, _offset.x) * Mathf.Rad2Deg;
+            _targetPosition = new Vector2(_mousePosition.x - screenPoint.x, _mousePosition.y - screenPoint.y);
+            
+            _playerController.Rotate(_targetPosition);
 
             if (Input.GetMouseButtonDown(0) && !_gameManager.gameIsPaused && !_gameManager.gameOverState)
             {
-                _playerController.Attack(_offset);
+                OnClicked?.Invoke(this, _targetPosition); 
             }
+            
         }
-
+        
     }
 }

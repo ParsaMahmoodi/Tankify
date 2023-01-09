@@ -461,6 +461,7 @@ GameObject:
   - component: {fileID: 8338518914396107448}
   - component: {fileID: 2086147244}
   - component: {fileID: 6759339739115244051}
+  - component: {fileID: 7987055521311021663}
   m_Layer: 0
   m_Name: EnemyNo4
   m_TagString: Untagged
@@ -621,6 +622,18 @@ MonoBehaviour:
   agent: {fileID: 2086147244}
   enemyData: {fileID: 11400000, guid: 1da2a3b3a2f1bda4bb5c3ebd49e59aa6, type: 2}
   particleSystem: {fileID: 7509883306327722640}
+--- !u!114 &7987055521311021663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7316209437831215423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb684e500e960a440bf4bbe28fc7138e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9142377994907600594
 GameObject:
   m_ObjectHideFlags: 0

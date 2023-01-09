@@ -6,19 +6,19 @@ namespace Features.Core.Scripts
 {
     public class FireBullet : MonoBehaviour
     {
-        [SerializeField] private GameObject _bulletPreFabObject;
-        [SerializeField] private GameObject _bulletSpawn;
+        [SerializeField] private Rigidbody2D bulletPreFabObject;
+        [SerializeField] private GameObject bulletSpawn;
         
         private float _bulletSpeed = 15f;
 
-        private GameObject _bullet;
+        private Rigidbody2D _bullet;
 
-        public void Fire(Vector2 offset)
+        public void Fire(Vector2 target)
         {
 
-            _bullet = Instantiate(_bulletPreFabObject, _bulletSpawn.transform.position, quaternion.identity);
+            _bullet = Instantiate(bulletPreFabObject, bulletSpawn.transform.position, quaternion.identity);
 
-            _bullet.GetComponent<Rigidbody2D>().velocity = offset * _bulletSpeed;
+            _bullet.velocity = target.normalized * _bulletSpeed;
 
             StartCoroutine(FireIEnumerator());
         }

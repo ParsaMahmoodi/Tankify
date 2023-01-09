@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Features.Core.Scripts
+namespace Features.Core.Scripts.EnemyScripts
 {
-    public class PlayerHealthBarController : MonoBehaviour
+    public class EnemyHealthBarController : MonoBehaviour
     {
         private Slider _healthSlider;
     

@@ -1,8 +1,8 @@
+using Features.Core.Scripts.Player;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-namespace Features.Core.Scripts
+namespace Features.Core.Scripts.EnemyScripts
 {
     public class EnemyNo2Controller : MonoBehaviour
     {
@@ -12,7 +12,6 @@ namespace Features.Core.Scripts
         
         [SerializeField] private EnemyData enemyData;
         
-        // ??? WHYY ??? //
         private GameManager _gameManager = GameManager.Instance;
 
         private GameObject _player;
@@ -24,16 +23,16 @@ namespace Features.Core.Scripts
         
         void Start()
         {
-            _enemyCurrentHealth = enemyData.health;
-            _enemyDamage = enemyData.damage;
-            
+            // _enemyCurrentHealth = enemyData.health;
+            // _enemyDamage = enemyData.damage;
+            _enemyCurrentHealth = 100;
+            _enemyDamage = 10;
             
             agent.updateUpAxis = false;
             
             _player = _gameManager.Player;
             _playerController = _player.GetComponent<PlayerController>();
 
-            
         }
 
         void Update()

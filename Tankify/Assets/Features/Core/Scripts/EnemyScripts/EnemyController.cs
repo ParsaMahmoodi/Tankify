@@ -1,11 +1,9 @@
-using System;
-using NavMeshComponents.Extensions;
-using UnityEditor;
+﻿using System.Collections;
+using Features.Core.Scripts.Player;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
 
-namespace Features.Core.Scripts
+namespace Features.Core.Scripts.EnemyScripts
 {
     [SelectionBase]
     public class EnemyController : MonoBehaviour
