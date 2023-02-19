@@ -8,7 +8,6 @@ namespace Features.Core.Scripts.Player
     {
         
         private Camera _mainCamera;
-        private GameManager _gameManager;
         private PlayerController _playerController;
 
         private Vector2 _mousePosition;
@@ -17,14 +16,12 @@ namespace Features.Core.Scripts.Player
         public float angle;
 
 
-        public event EventHandler<Vector2> OnClicked;
+        public event Action<Vector2> OnClicked;
         
         
         void Start()
         {
             _mainCamera = Camera.main;
-
-            _gameManager = GameManager.Instance;
 
             _playerController = gameObject.GetComponent<PlayerController>();
         }
@@ -38,9 +35,9 @@ namespace Features.Core.Scripts.Player
             
             _playerController.Rotate(_targetPosition);
 
-            if (Input.GetMouseButtonDown(0) && !_gameManager.gameIsPaused && !_gameManager.gameOverState)
+            if (Input.GetMouseButtonDown(0) && !_playerController.pauseFlag && !_playerController.gameOverFlag)
             {
-                OnClicked?.Invoke(this, _targetPosition); 
+                OnClicked?.Invoke(_targetPosition); 
             }
             
         }

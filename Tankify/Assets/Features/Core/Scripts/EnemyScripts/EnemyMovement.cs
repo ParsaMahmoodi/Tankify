@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +16,12 @@ namespace Features.Core.Scripts.EnemyScripts
             _agent.updateRotation = false;
         }
 
-        public virtual void Move(Transform target)
+        private void Update()
+        {
+            
+        }
+
+        public void Move(Transform target)
         {
             _agent.isStopped = false;
             _agent.SetDestination(target.position);

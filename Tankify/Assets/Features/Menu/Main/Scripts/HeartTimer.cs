@@ -1,4 +1,6 @@
 using System;
+using RTLTMPro;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,17 +11,16 @@ namespace Features.Menu.Main.Scripts
     {
         private DataController _dataController = DataController.GetInstance();
 
-        [SerializeField]
-        private float _timeLimit = 1f * 60f;
+        [Space(10)]
+        [Header("Heart Secttion")]
+        [Tooltip("Timer value should be between 25 and 100.")]
+        [Range(25f, 100f)] [SerializeField] private float _timeLimit = 1f * 60f;
+        [SerializeField] private RTLTextMeshPro _timeForNextHeart;
+        [SerializeField] private RTLTextMeshPro _heartCounterText;
+
 
         private float _timer;
 
-        [SerializeField]
-        private Text _timeForNextHeart;
-
-        [SerializeField]
-        private Text _heartCounterText;
-    
         void Start()
         { 
             UpdateHeartCounterText();
@@ -49,13 +50,13 @@ namespace Features.Menu.Main.Scripts
             float min = Mathf.FloorToInt(time / 60);
             float sec = Mathf.FloorToInt(time % 60);
 
-            string currentTime = "" + min + ":" + sec;
+            string currentTime = "" + sec + ":" + min;
             _timeForNextHeart.text = currentTime;
         }
 
         private void UpdateHeartCounterText()
         {
-            _heartCounterText.text = _dataController.HeartCount.ToString() + "/10";
+            _heartCounterText.text = "10/" + _dataController.HeartCount.ToString();
         }
 
         private void AddHeart()
@@ -100,6 +101,7 @@ namespace Features.Menu.Main.Scripts
             _dataController.SaveHeartCounterState(remainingTime, currentTime.ToString());
         }
 
+        [UnityEngine.ContextMenu("Load Heart State")]
         private void LoadHeartState()
         {
             _dataController.LoadHeartCounterState();

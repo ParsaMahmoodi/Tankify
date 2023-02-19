@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Features.Core.Scripts.Player;
 using UnityEngine;
@@ -6,32 +7,35 @@ namespace Features.Core.Scripts.EnemyScripts
 {
     public class EnemyControllerMain : MonoBehaviour
     {
-        [SerializeField] private EnemyHealthBarController _healthBar; 
+        [SerializeField] protected EnemyHealthBarController _healthBar; 
         
-        [SerializeField] private ParticleSystem _particleSystem;
+        [SerializeField] public ParticleSystem _particleSystem;
+
+        [NonSerialized] public GameManager _gameManager = GameManager.Instance;
+
+        [NonSerialized] public EnemyData _enemyData;
+
+        [NonSerialized] public GameObject _player;
+
+        [NonSerialized] public PlayerController _playerController;
         
-        private GameManager _gameManager = GameManager.Instance;
+        [NonSerialized] public float _enemyMaxHealth = 100f;
 
-        private EnemyData _enemyData;
+        [NonSerialized] public float _enemyCurrentHealth;
 
-        private GameObject _player;
-
-        private PlayerController _playerController;
-        
-        private float _enemyMaxHealth = 100f;
-
-        private float _enemyCurrentHealth;
-
-        private float _enemyDamage = 20f;
+        [NonSerialized] public float _enemyDamage = 20f;
 
         // private float _enemyMoveSpeed = 2f;
 
-        private AgentRotation _agentRotation;
+        [NonSerialized] public AgentRotation _agentRotation;
 
-        private EnemyMovement _enemyMovement;
+        [NonSerialized] public EnemyMovement _enemyMovement;
         
-        
-        void Start()
+        [HideInInspector] public bool pauseFlag = false;
+        [NonSerialized] public bool gameOverFlag = false;
+
+
+        public void Start()
         {
             
             _agentRotation = gameObject.GetComponent<AgentRotation>();
@@ -44,11 +48,16 @@ namespace Features.Core.Scripts.EnemyScripts
             _playerController = _player.GetComponent<PlayerController>();
 
             _enemyCurrentHealth = _enemyMaxHealth;
+            
+            _gameManager.OnPauseGame += PauseGameController;
+            _gameManager.OnResumeGame += ResumeController;
+            _gameManager.OnGameOver += GameOverController;
+
         }
         
-        void Update()
+        public void Update()
         {
-            if (!_gameManager.gameIsPaused && !_gameManager.gameOverState)
+            if (!pauseFlag && !gameOverFlag)
             {
                 MoveEnemy();
                 RotateEnemy();
@@ -59,22 +68,22 @@ namespace Features.Core.Scripts.EnemyScripts
             }
         }
         
-        void MoveEnemy()
+        public void MoveEnemy()
         {
             _enemyMovement.Move(_player.transform);
         }
 
-        void StopEnemy()
+        public void StopEnemy()
         {
             _enemyMovement.Stop();
         }
         
-        void RotateEnemy()
+        public void RotateEnemy()
         {
             _agentRotation.Rotate(_player.transform.position);
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        public virtual void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("Bullet"))
             {
@@ -90,7 +99,7 @@ namespace Features.Core.Scripts.EnemyScripts
             }
         }
 
-        private void TakeDamage(int dmg = 25)
+        public void TakeDamage(int dmg = 25)
         {
             _enemyCurrentHealth -= dmg;
             _healthBar.SetHealth(_enemyCurrentHealth);
@@ -103,12 +112,26 @@ namespace Features.Core.Scripts.EnemyScripts
             }
         }
 
-        IEnumerator DestroyEnemy()
+        public IEnumerator DestroyEnemy()
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             yield return new WaitForSeconds(0.5f);
             Destroy(gameObject);
         }
-
+        
+        public void PauseGameController()
+        {
+            pauseFlag = true;
+        }
+        
+        public void ResumeController()
+        {
+            pauseFlag = false;
+        }
+        
+        public void GameOverController()
+        {
+            gameOverFlag = true;
+        }
     }
 }

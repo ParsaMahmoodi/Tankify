@@ -1,5 +1,6 @@
 using System;
 using Features.Core.Scripts;
+using RTLTMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,14 +12,14 @@ namespace Features.Menu.Main.Scripts
     {
 
         [SerializeField]
-        private Text _highScoreText;
+        private RTLTextMeshPro _highScoreText;
 
         private DataController _dataController = DataController.GetInstance();
 
         private int _heartCount;
         
         [SerializeField]
-        private Text _heartCounterText;
+        private RTLTextMeshPro heartCounterText;
 
         private void Start()
         {
@@ -56,8 +57,8 @@ namespace Features.Menu.Main.Scripts
         private void RefreshData()
         {
             _heartCount = PlayerPrefs.GetInt("HeartCount", 1);
-            _heartCounterText.text = _dataController.HeartCount.ToString() + "/10";
-            _highScoreText.text = "Best Score: " + PlayerPrefs.GetInt("HighScore", 0);
+            heartCounterText.text = "10/" + _dataController.HeartCount.ToString();
+            _highScoreText.text = "بهترین امتیاز: " + PlayerPrefs.GetInt("HighScore", 0);
         }
         
     }

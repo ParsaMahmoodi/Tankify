@@ -43,20 +43,21 @@ namespace Features.Core.Scripts
         private void Pause()
         {
             _gameManager.PauseGame();
-            
             _pauseMenuUI.SetActive(true);
-            _enemySpawnComponent.PauseSpawn();
-            _gameManager.gameIsPaused = true;
+            
+            // _enemySpawnComponent.PauseSpawn();
+            // _gameManager.gameIsPaused = true;
+            
             _previousHighScoreText.text = "Previous High Score: " + PlayerPrefs.GetInt("HighScore", 0);
         }
         
         private void Resume()
         {
             _gameManager.ResumeGame();
-            
             _pauseMenuUI.SetActive(false);
-            _gameManager.gameIsPaused = false;
-            _enemySpawnComponent.ResumeSpawn();
+            
+            // _gameManager.gameIsPaused = false;
+            // _enemySpawnComponent.ResumeSpawn();
         }
         
         public void RestartLevel()

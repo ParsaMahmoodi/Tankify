@@ -7,7 +7,10 @@ namespace Features.Core.Scripts.EnemyScripts
     public class EnemyData : ScriptableObject
     {
         [SerializeField] private List<Enemy> enemies = new List<Enemy>();
-
+        
+        [SerializeField] public AnimationCurve spawnTimerCurve;
+        [SerializeField] public AnimationCurve spawnAmountCurve;
+        
         public List<Enemy> Enemies => enemies;
     }
 }

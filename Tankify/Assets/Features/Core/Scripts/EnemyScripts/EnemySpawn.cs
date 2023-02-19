@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System;
+using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
 
 namespace Features.Core.Scripts.EnemyScripts
@@ -14,54 +15,73 @@ namespace Features.Core.Scripts.EnemyScripts
         [SerializeField] private GameObject[] enemies;
 
         [SerializeField] private EnemyData enemyData;
+        
+        private AnimationCurve _spawnTimerCurve;
+        private AnimationCurve _spawnAmountCurve;
 
-        private float _spawnTimer = 2f;
-        private float _spawnRateIncrease = 10f;
         private float _totalSpawnProbability = 0;
+        
+        private float _nextWaveTimer;
+
+        private bool _spawnStatus = true;
+
+        private int _waveIndex;
 
         // Start is called before the first frame update
         void Start()
         {
             _gameManager = GameManager.Instance;
-            
-            StartCoroutine(SpawnNextEnemy());
-            StartCoroutine(SpawnRateIncrease());
+
+            _gameManager.OnPauseGame += PauseSpawn;
+            _gameManager.OnResumeGame += ResumeSpawn;
+            _gameManager.OnGameOver += PauseSpawn;
+
+            _spawnTimerCurve = enemyData.spawnTimerCurve;
+            _spawnAmountCurve = enemyData.spawnAmountCurve;
         }
 
-        IEnumerator SpawnNextEnemy()
+        private void Update()
+        {
+            if (_spawnStatus)
+            {
+                _waveIndex++;
+                _nextWaveTimer -= Time.deltaTime;
+                if (_nextWaveTimer <= 0f)
+                {
+                    _nextWaveTimer = _spawnTimerCurve.Evaluate(_waveIndex);
+                    SpawnWave();
+                }
+            }
+        }
+
+        void SpawnWave()
+        {
+            int spawnAmount = Mathf.RoundToInt(_spawnAmountCurve.Evaluate(_waveIndex));
+
+            for (int i = 0; i < spawnAmount; i++)
+            {
+                SpawnEnemy();
+            }
+        }
+
+        void SpawnEnemy()
         {
             int nextSpawnLocation = Random.Range(0, spawnPoints.Length);
             Enemy nextEnemyName = RandomEnemy();
-            Instantiate(nextEnemyName.prefab, spawnPoints[nextSpawnLocation].transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(_spawnTimer);
-
-            if (!_gameManager.gameOverState && !_gameManager.gameIsPaused)
-            {
-                StartCoroutine(SpawnNextEnemy());
-            }
-        }
-    
-        IEnumerator SpawnRateIncrease()
-        {
-            yield return new WaitForSeconds(_spawnRateIncrease);
-            if (_spawnTimer >= 0.5f)
-            {
-                _spawnTimer -= 0.15f;
-                StartCoroutine(SpawnRateIncrease());
-            }
+            if (nextEnemyName.prefab!= null && spawnPoints[nextSpawnLocation].transform.position !=null && Quaternion.identity!=null)
+                Instantiate(nextEnemyName.prefab, spawnPoints[nextSpawnLocation].transform.position, Quaternion.identity);
         }
 
-        public void ResumeSpawn()
+        void ResumeSpawn()
         {
-            StartCoroutine(SpawnNextEnemy());
-            StartCoroutine(SpawnRateIncrease());
+            _spawnStatus = true;
         }
-        
-        public void PauseSpawn()
+
+        void PauseSpawn()
         {
-            StopAllCoroutines();
+            _spawnStatus = false;
         }
-        
+
         private Enemy RandomEnemy()
         {
             TotalSpawnProbabilityCalculator();
@@ -70,7 +90,7 @@ namespace Features.Core.Scripts.EnemyScripts
             {
                 return enemyData.Enemies[Random.Range(0, enemyData.Enemies.Count)];
             }
-            
+
             Unity.Mathematics.Random random = new Unity.Mathematics.Random();
             float enemyProb = random.NextFloat(0, _totalSpawnProbability);
 
@@ -78,7 +98,7 @@ namespace Features.Core.Scripts.EnemyScripts
             foreach (var enemy in enemyData.Enemies)
             {
                 probabilityLocator += enemy.spawnProbability;
-                
+
                 if (enemyProb < probabilityLocator)
                 {
                     return enemy;
@@ -96,8 +116,8 @@ namespace Features.Core.Scripts.EnemyScripts
             {
                 _totalSpawnProbability += enemy.spawnProbability;
             }
-
             
         }
+
     }
 }
