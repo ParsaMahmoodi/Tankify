@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Bazaar.Data;
 using Bazaar.Poolakey;
+using Bazaar.Poolakey.Data;
 using UnityEngine;
 
 public class Cafe : Market
@@ -22,10 +23,10 @@ public class Cafe : Market
         Debug.Log("INIT CAFE");
     }
 
-    public override async Task<bool> Purchase(string id)
+    public override async Task<Result<PurchaseInfo>> Purchase(string id)
     {
         #if UNITY_EDITOR
-            return true;
+            return new Result<PurchaseInfo>(Status.Success, "string message", "string stackTrace = null");
         #endif
         
         if (_payment != null)
@@ -38,11 +39,11 @@ public class Cafe : Market
                 Debug.Log(purchase.ToString());
 
                 Debug.Log("Purchase-CAFE");
-                return true;
+                return result;
             }
         }
 
-        return false;
+        return null;
     }
 
     static async void PaymentConnect(Payment payment)
@@ -96,13 +97,15 @@ public class Cafe : Market
         }
     }
 
-    public override async Task<bool> Consume(string id)
+    public override async Task<bool> Consume(string purchaseToken)
     {
         #if UNITY_EDITOR
             return true;
         #endif
         
-        var result = await _payment.Consume("PURCHASE_TOKEN");
+        var result = await _payment.Consume(purchaseToken);
+        Debug.Log("Consumed");
+        Debug.Log(result);
         return true;
     }
 

@@ -39,6 +39,7 @@ namespace Features.Menu.Shop.Scripts
         
         public void PurchaseButton()
         {
+            Debug.Log("Purchase Button clicked");
             PurchaseFunction(Data);
         }
     }

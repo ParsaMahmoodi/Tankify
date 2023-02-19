@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Bazaar.Data;
+using Bazaar.Poolakey.Data;
 using Features.Menu.Shop.Scripts;
 using UnityEngine;
 
@@ -46,19 +48,24 @@ public class PurchaseManager : MonoBehaviour
         market.Initialize();
     }
 
-    public bool PurchaseGemFromShop(String id)
+    public string PurchaseGemFromShop(String id)
     {
-        if(market.Purchase(id).Result)
+        Result<PurchaseInfo> result = market.Purchase(id).Result;
+        
+        Debug.Log("Purchase Manager: ");
+        Debug.Log(result);
+        
+        if(result.status == Status.Success)
         {
-            return true;
+            return result.data.purchaseToken;
         }
 
-        return false;
+        return "null";
     }
 
-    public void Consume(string id)
+    public void Consume(string pt)
     {
-        market.Consume("PURCHASE TOKEN");
+        market.Consume(pt);
     }
     
 }

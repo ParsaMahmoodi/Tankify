@@ -1,5 +1,5 @@
 {
-    "m_SelectedDeviceId": "R9AMC2FADGJ",
+    "m_SelectedDeviceId": "9WV7N18401025442",
     "m_SelectedPackage": {
         "deviceId": "",
         "name": "",
@@ -27,6 +27,12 @@
             "exited": true
         },
         {
+            "deviceId": "42006594d2b29411",
+            "name": "com.sec.android.app.myfiles",
+            "processId": 22760,
+            "exited": false
+        },
+        {
             "deviceId": "R9AMC2FADGJ",
             "name": "com.sec.android.app.launcher",
             "processId": 1825,
@@ -36,6 +42,54 @@
             "deviceId": "R9AMC2FADGJ",
             "name": "com.ParsaCodes.testfortest",
             "processId": 32528,
+            "exited": false
+        },
+        {
+            "deviceId": "127.0.0.1:62001",
+            "name": "com.unity3d.mobileremote",
+            "processId": 5001,
+            "exited": false
+        },
+        {
+            "deviceId": "127.0.0.1:62001",
+            "name": "com.ParsaCodes.testfortest",
+            "processId": 3277,
+            "exited": false
+        },
+        {
+            "deviceId": "127.0.0.1:62001",
+            "name": "com.android.launcher3",
+            "processId": 2573,
+            "exited": false
+        },
+        {
+            "deviceId": "9WV7N18401025442",
+            "name": "com.android.settings",
+            "processId": 29978,
+            "exited": true
+        },
+        {
+            "deviceId": "9WV7N18401025442",
+            "name": "com.ParsaCodes.testfortest",
+            "processId": 30730,
+            "exited": true
+        },
+        {
+            "deviceId": "9WV7N18401025442",
+            "name": "com.huawei.android.launcher",
+            "processId": 1787,
+            "exited": false
+        },
+        {
+            "deviceId": "9WV7N18401025442",
+            "name": "com.ParsaCodes.testfortest",
+            "processId": 3080,
+            "exited": true
+        },
+        {
+            "deviceId": "9WV7N18401025442",
+            "name": "com.ParsaCodes.testfortest",
+            "processId": 3373,
             "exited": false
         }
     ],
@@ -47,7 +101,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "",
@@ -68,6 +122,10 @@
             {
                 "m_Name": "CRASH",
                 "m_Selected": false
+            },
+            {
+                "m_Name": "art",
+                "m_Selected": true
             }
         ]
     },
@@ -91,7 +149,7 @@
     },
     "m_FilterOptions": {
         "m_Filter": "",
-        "m_UseRegularExpressions": true,
+        "m_UseRegularExpressions": false,
         "m_MatchCase": false
     },
     "m_SymbolPaths": [],

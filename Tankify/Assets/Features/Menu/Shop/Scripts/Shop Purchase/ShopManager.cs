@@ -32,11 +32,14 @@ public class ShopManager : MonoBehaviour
 
     public void PurchaseGem(Item data)
     {
-        if (_purchaseManager.PurchaseGemFromShop(data.IdName))
+        string resultPurchaseToken = _purchaseManager.PurchaseGemFromShop(data.IdName);
+        Debug.Log("SHOP MANAGE RES: ");
+        Debug.Log(resultPurchaseToken);
+        if (resultPurchaseToken != "null")
         {
             if (_currencyController.AddGem(data.amount))
             {
-                _purchaseManager.Consume("Purchase Token");
+                _purchaseManager.Consume(resultPurchaseToken);
             }
         }
     }
