@@ -48,6 +48,7 @@ public class PurchaseManager : MonoBehaviour
 
     public bool PurchaseGemFromShop(String id)
     {
+        Debug.Log("Purchse Manager : PurchaseGemFromShop");
         if(market.Purchase(id).Result)
         {
             return true;

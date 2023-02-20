@@ -21,6 +21,7 @@ namespace Features.Menu.Shop.Scripts
 
         protected override void PurchaseFunction(Item data)
         {
+            Debug.Log("PurchaseFunction ShopItem");
             _shopManager.PurchaseGem(data);
         }
         

@@ -32,6 +32,7 @@ public class ShopManager : MonoBehaviour
 
     public void PurchaseGem(Item data)
     {
+        Debug.Log("PurchaseGem + SHOP MANAGER");
         if (_purchaseManager.PurchaseGemFromShop(data.IdName))
         {
             if (_currencyController.AddGem(data.amount))
