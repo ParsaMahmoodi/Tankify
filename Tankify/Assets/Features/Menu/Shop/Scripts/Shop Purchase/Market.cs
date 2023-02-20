@@ -8,7 +8,7 @@ using UnityEngine;
 
 public abstract class Market
 {
-    public abstract void Initialize();
+    public abstract Task Initialize();
 
     public abstract Task<Result<PurchaseInfo>> Purchase(String id);
 

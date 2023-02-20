@@ -34,7 +34,7 @@ public class PurchaseManager : MonoBehaviour
         return _instance;
     }
     
-    void Start()
+    async void Start()
     {
 
         if (isCafe)
@@ -45,21 +45,34 @@ public class PurchaseManager : MonoBehaviour
         {
             
         }
-        market.Initialize();
+        await market.Initialize();
     }
 
     public string PurchaseGemFromShop(String id)
     {
+        
+        Debug.Log("PurchaseGemFromShop in PurchaseManager");
+        
         Result<PurchaseInfo> result = market.Purchase(id).Result;
         
-        Debug.Log("Purchase Manager: ");
         Debug.Log(result);
+        Debug.Log(result.data);
+        Debug.Log(result.message);
+        Debug.Log(result.status);
+        Debug.Log(result.stackTrace);
+        
         
         if(result.status == Status.Success)
         {
+            Debug.Log("IF IN PurchaseGemFromShop in PurchaseManager");
+            
+            Debug.Log(result.data.purchaseToken);
+            
             return result.data.purchaseToken;
         }
-
+        
+        Debug.Log("PurchaseGemFromShop in PurchaseManager is returning null");
+        
         return "null";
     }
 

@@ -12,14 +12,24 @@ public class Cafe : Market
     private readonly string _key =
         "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwCayAFaNOAQhNojebyAiJPPSqcCKltD/3Oe0XUHq7Ay5v/pWS+Fif2m76pvPe+ogA8Njs2LbgmTnSUL7KZPO+YlCFuvMA6kSU0OeZ/R3rJfWFBL4tLL74jE3pgD0ujEZwjuFQqaqI6cMsP93FRta4dR7L/gLS/bbpP9bEQ+ykLlB/c6kIehB3po8sDo99BxsyhwXJUwReRMS0FUL3JcbQYFnr5r4EvwKCdg4nCxLDsCAwEAAQ==";
     
-    public override void Initialize()
+    public override async Task Initialize()
     {
+        Debug.Log(_key);
+        
         _securityCheck = SecurityCheck.Enable(_key);
+        
+        Debug.Log(_securityCheck.rsaPublicKey);
+        
         PaymentConfiguration paymentConfiguration = new PaymentConfiguration(_securityCheck);
+        
+        Debug.Log(paymentConfiguration.securityCheck);
         
         _payment = new Payment(paymentConfiguration);
         
-        PaymentConnect(_payment);
+        Debug.Log(_payment.version);
+        
+        await PaymentConnect(_payment);
+        
         Debug.Log("INIT CAFE");
     }
 
@@ -31,23 +41,34 @@ public class Cafe : Market
         
         if (_payment != null)
         {
+            
+            Debug.Log("_payment is not null and we are in IF in Purchase in CAFE");
+            
             var result = await _payment.Purchase(id);
             Debug.Log($"{result.message}, {result.stackTrace}");
             if (result.status == Status.Success)
             {
+                Debug.Log("second IF in Purchase in CAFE");
+
                 var purchase = result.data;
+                Debug.Log(purchase);
                 Debug.Log(purchase.ToString());
 
                 Debug.Log("Purchase-CAFE");
+                Debug.Log(result);
+
                 return result;
             }
         }
-
+        
+        Debug.Log("Purchase in CAFE returning null");
+        
         return null;
     }
 
-    static async void PaymentConnect(Payment payment)
+    static async Task PaymentConnect(Payment payment)
     {
+        Debug.Log("Connecting to payment");
         var result = await payment.Connect();
         Debug.Log("connection to CAFE: " + result.ToString());
     }

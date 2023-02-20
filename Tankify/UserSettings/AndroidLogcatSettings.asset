@@ -1,5 +1,5 @@
 {
-    "m_SelectedDeviceId": "9WV7N18401025442",
+    "m_SelectedDeviceId": "4200f1a2d08364b1",
     "m_SelectedPackage": {
         "deviceId": "",
         "name": "",
@@ -30,6 +30,12 @@
             "deviceId": "42006594d2b29411",
             "name": "com.sec.android.app.myfiles",
             "processId": 22760,
+            "exited": true
+        },
+        {
+            "deviceId": "42006594d2b29411",
+            "name": "com.samsung.android.messaging",
+            "processId": 29128,
             "exited": false
         },
         {
@@ -64,18 +70,6 @@
         },
         {
             "deviceId": "9WV7N18401025442",
-            "name": "com.android.settings",
-            "processId": 29978,
-            "exited": true
-        },
-        {
-            "deviceId": "9WV7N18401025442",
-            "name": "com.ParsaCodes.testfortest",
-            "processId": 30730,
-            "exited": true
-        },
-        {
-            "deviceId": "9WV7N18401025442",
             "name": "com.huawei.android.launcher",
             "processId": 1787,
             "exited": false
@@ -83,13 +77,61 @@
         {
             "deviceId": "9WV7N18401025442",
             "name": "com.ParsaCodes.testfortest",
-            "processId": 3080,
+            "processId": 3373,
+            "exited": true
+        },
+        {
+            "deviceId": "9WV7N18401025442",
+            "name": "com.farsitel.bazaar",
+            "processId": 4800,
+            "exited": false
+        },
+        {
+            "deviceId": "9WV7N18401025442",
+            "name": "com.ParsaCodes.testfortest",
+            "processId": 4709,
             "exited": true
         },
         {
             "deviceId": "9WV7N18401025442",
             "name": "com.ParsaCodes.testfortest",
-            "processId": 3373,
+            "processId": 5309,
+            "exited": true
+        },
+        {
+            "deviceId": "9WV7N18401025442",
+            "name": "com.google.android.packageinstaller",
+            "processId": 7657,
+            "exited": false
+        },
+        {
+            "deviceId": "9WV7N18401025442",
+            "name": "com.ParsaCodes.testfortest",
+            "processId": 8597,
+            "exited": true
+        },
+        {
+            "deviceId": "9WV7N18401025442",
+            "name": "com.ParsaCodes.testfortest",
+            "processId": 9085,
+            "exited": false
+        },
+        {
+            "deviceId": "4200f1a2d08364b1",
+            "name": "com.ParsaCodes.testfortest",
+            "processId": 22238,
+            "exited": true
+        },
+        {
+            "deviceId": "4200f1a2d08364b1",
+            "name": "com.ParsaCodes.testfortest",
+            "processId": 25774,
+            "exited": true
+        },
+        {
+            "deviceId": "4200f1a2d08364b1",
+            "name": "com.sec.android.app.launcher",
+            "processId": 4479,
             "exited": false
         }
     ],
@@ -117,11 +159,11 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "CRASH",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "art",

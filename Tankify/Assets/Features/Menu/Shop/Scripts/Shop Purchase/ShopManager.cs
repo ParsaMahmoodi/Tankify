@@ -32,13 +32,26 @@ public class ShopManager : MonoBehaviour
 
     public void PurchaseGem(Item data)
     {
+        Debug.Log("PurchaseGem in ShopManager");
+        Debug.Log(data.idName);
+        
         string resultPurchaseToken = _purchaseManager.PurchaseGemFromShop(data.IdName);
+        
         Debug.Log("SHOP MANAGE RES: ");
         Debug.Log(resultPurchaseToken);
+        
         if (resultPurchaseToken != "null")
         {
-            if (_currencyController.AddGem(data.amount))
+            
+            Debug.Log("ENTERED SECOND IF in ShopManager");
+
+            bool temp = _currencyController.AddGem(data.amount);
+            
+            Debug.Log(temp);
+            
+            if (temp)
             {
+                Debug.Log("ENTERED THIRD IF in ShopManager");
                 _purchaseManager.Consume(resultPurchaseToken);
             }
         }
